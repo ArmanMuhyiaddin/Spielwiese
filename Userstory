@@ -101,6 +101,181 @@ KUNDENNUMMER	40			Y	VARCHAR2 (10 Char)		No	None	19560	0	5E-5				False
 ENTSCHEIDUNG_MARKIERT	41			N	VARCHAR2 (1 Char)	'0'	No	None	1	0	1				False
 
 
+CREATE TABLE TXM.BB_TRANSACTION (
+    ID NUMBER,
+    TRANSAKTIONSID VARCHAR2(100 CHAR),
+    AUFTRAGGEBER VARCHAR2(70 CHAR),
+    AUFTRAGGEBERIBAN VARCHAR2(34 CHAR),
+    AUFTRAGGEBERBIC VARCHAR2(11 CHAR),
+    EMPFAENGER VARCHAR2(70 CHAR),
+    EMPFAENGERIBAN VARCHAR2(100 CHAR),
+    EMPFAENGERBIC VARCHAR2(11 CHAR),
+    BETRAG NUMBER(18,2),
+    VWZ_UNSTRUKTURIERT VARCHAR2(140 CHAR),
+    VWZ_STRUKTURIERT VARCHAR2(140 CHAR),
+    E2E_REFERENZ VARCHAR2(35 CHAR),
+    ZIELLAND VARCHAR2(4 CHAR),
+    AUFTRAGSDATUM DATE,
+    ZV_DATEINAME VARCHAR2(100 CHAR),
+    AUFTRAGSWEG VARCHAR2(100 CHAR),
+    AUTHORISIERUNGSART VARCHAR2(100 CHAR),
+    LFD_NR_IN_ZV_DATEI NUMBER,
+    ZV_DATEI_EINGANGSDATUM NUMBER(8),
+    WAEHRUNG VARCHAR2(3 CHAR),
+    BETRAG_FREMDWAEHRUNG NUMBER(18,2),
+    FEDWIRENUMMER VARCHAR2(12 CHAR),
+    ZV_FORMAT VARCHAR2(10 CHAR),
+    AWV_BEACHTEN VARCHAR2(1 CHAR),
+    EMPFAENGERKONTONR VARCHAR2(34 CHAR),
+    ZIELKONTOVERBINDUNG VARCHAR2(200 CHAR),
+    KUNDENNUMMER VARCHAR2(10 CHAR),
+    -- Hinzufügen der neuen Spalten
+    MessageID VARCHAR2(35 CHAR),
+    FileRef VARCHAR2(18 CHAR),
+    SumMessageID VARCHAR2(35 CHAR),
+    IntrBkSttlmDt VARCHAR2(35 CHAR)
+);
+
+CREATE TABLE TXM.BB_DECISION (
+    TRANSACTIONID VARCHAR2(100 CHAR),
+    STATUS VARCHAR2(10 CHAR),
+    DAT_ERST DATE,
+    ASSET VARCHAR2(3 CHAR),
+    RSSCORE INTEGER,
+    RSCOMMENT VARCHAR2(1000 CHAR),
+    RSEVENTID VARCHAR2(100 CHAR),
+    RSREQUESTID VARCHAR2(100 CHAR),
+    PRIMARY KEY (TRANSACTIONID, ASSET, STATUS)
+);
 
 
+CREATE TABLE TXM.RETAIL_TRANSACTION (
+    ID NUMBER,
+    TRANSAKTIONSID VARCHAR2(100 CHAR),
+    AUFTRAGGEBER VARCHAR2(70 CHAR),
+    AUFTRAGGEBERIBAN VARCHAR2(34 CHAR),
+    AUFTRAGGEBERBIC VARCHAR2(11 CHAR),
+    EMPFAENGER VARCHAR2(70 CHAR),
+    EMPFAENGERIBAN VARCHAR2(100 CHAR),
+    EMPFAENGERBIC VARCHAR2(11 CHAR),
+    BETRAG NUMBER(18,2),
+    VWZ_UNSTRUKTURIERT VARCHAR2(140 CHAR),
+    VWZ_STRUKTURIERT VARCHAR2(140 CHAR),
+    E2E_REFERENZ VARCHAR2(35 CHAR),
+    ZIELLAND VARCHAR2(4 CHAR),
+    AUFTRAGSDATUM DATE,
+    ZV_DATEINAME VARCHAR2(100 CHAR),
+    AUFTRAGSWEG VARCHAR2(100 CHAR),
+    AUTHORISIERUNGSART VARCHAR2(100 CHAR),
+    LFD_NR_IN_ZV_DATEI NUMBER,
+    ZV_DATEI_EINGANGSDATUM NUMBER(8),
+    WAEHRUNG VARCHAR2(3 CHAR),
+    BETRAG_FREMDWAEHRUNG NUMBER(18,2),
+    FEDWIRENUMMER VARCHAR2(12 CHAR),
+    ZV_FORMAT VARCHAR2(10 CHAR),
+    AWV_BEACHTEN VARCHAR2(1 CHAR),
+    EMPFAENGERKONTONR VARCHAR2(34 CHAR),
+    ZIELKONTOVERBINDUNG VARCHAR2(200 CHAR),
+    KUNDENNUMMER VARCHAR2(10 CHAR),
+    MessageID VARCHAR2(35 CHAR),
+    FileRef VARCHAR2(18 CHAR),
+    SumMessageID VARCHAR2(35 CHAR),
+    IntrBkSttlmDt VARCHAR2(35 CHAR)
+);
 
+
+CREATE TABLE TXM.RETAIL_DECISION (
+    TRANSACTIONID VARCHAR2(100 CHAR),
+    STATUS VARCHAR2(10 CHAR),
+    DAT_ERST DATE,
+    ASSET VARCHAR2(3 CHAR),
+    RSSCORE INTEGER,
+    RSCOMMENT VARCHAR2(1000 CHAR),
+    RSEVENTID VARCHAR2(100 CHAR),
+    RSREQUESTID VARCHAR2(100 CHAR),
+    PRIMARY KEY (TRANSACTIONID, ASSET, STATUS)
+);
+
+
+Um das erstellte SQL-Skript in das Git-Repository auf Azure DevOps hochzuladen, folgen Sie diesen Schritten:
+1. Speichern des Skripts
+
+    Speichern Sie das SQL-Skript als Datei. Zum Beispiel: create_txm_bb_decision_table.sql.
+
+2. Initialisieren eines Git-Repositories (falls noch nicht geschehen)
+
+    Öffnen Sie Ihr Terminal (Bash) oder die Git-Bash, wenn Sie unter Windows arbeiten.
+
+    Navigieren Sie zu dem Verzeichnis, in dem Sie das Skript gespeichert haben:
+
+    bash
+
+cd /path/to/your/project
+
+Initialisieren Sie ein neues Git-Repository (falls noch nicht vorhanden):
+
+bash
+
+    git init
+
+3. Hinzufügen des Skripts zum Git-Repository
+
+    Fügen Sie die Datei dem Staging-Bereich hinzu:
+
+    bash
+
+git add create_txm_bb_decision_table.sql
+
+Committen Sie die Änderungen mit einer sinnvollen Nachricht:
+
+bash
+
+    git commit -m "Erstellen der Tabelle TXM.BB_DECISION"
+
+4. Verbinden mit Azure DevOps und Hochladen des Skripts
+
+    Erstellen eines Remote-Repositorys auf Azure DevOps:
+        Melden Sie sich bei Ihrem Azure DevOps-Konto an.
+        Navigieren Sie zu Ihrem Projekt.
+        Gehen Sie zu Repos > Files.
+        Klicken Sie auf New repository und folgen Sie den Anweisungen, um ein neues Repository zu erstellen (falls noch nicht vorhanden).
+
+    Verbinden Sie Ihr lokales Repository mit dem Azure DevOps-Repository:
+
+        Holen Sie sich die URL des Azure DevOps-Repositorys. Diese finden Sie in der Azure DevOps-Benutzeroberfläche unter Repos > Files > Clone.
+
+        Fügen Sie das Remote-Repository zu Ihrem lokalen Repository hinzu:
+
+        bash
+
+    git remote add origin https://dev.azure.com/yourorganization/yourproject/_git/yourrepository
+
+Pushen Sie die Änderungen zu Azure DevOps:
+
+bash
+
+    git push -u origin master
+
+Zusammenfassung der Schritte in Bash
+
+bash
+
+# Navigieren Sie zu Ihrem Projektverzeichnis
+cd /path/to/your/project
+
+# Initialisieren Sie ein neues Git-Repository (falls noch nicht vorhanden)
+git init
+
+# Fügen Sie die SQL-Datei dem Staging-Bereich hinzu
+git add create_txm_bb_decision_table.sql
+
+# Committen Sie die Änderungen
+git commit -m "Erstellen der Tabelle TXM.BB_DECISION"
+
+# Fügen Sie das Remote-Repository von Azure DevOps hinzu
+git remote add origin https://dev.azure.com/yourorganization/yourproject/_git/yourrepository
+
+# Pushen Sie die Änderungen zu Azure DevOps
+git push -u origin master
+
+Nach diesen Schritten wird Ihr SQL-Skript im Git-Repository auf Azure DevOps gespeichert sein. Von dort aus kann es von anderen Teammitgliedern überprüft, getestet und verwendet werden.
