@@ -1,0 +1,43 @@
+As a Payment Operations
+I want to have a new reconsiliation report. 
+to have all data  stored in BDAR to create a Cognos/BI Report on top.
+
+Prerequesites:
+Concept see https://orangesharing.com/x/-mhrI
+To Do's:
+Create new tables for SME/BB processing 
+New table  TXM.BB_TRANSACTION  copy from FRAUD_VERDACHTSFAELLE
+
+not columns ( MIAB_NR_ERST, MIAB_NR_AEND, DAT_AEND, ENTSCHEIDUNG_*,  MANUAL_RESPONSE_FILE_FLAG, DAT_LOCK, DAT_LOCK_BEARBEITER)
+
+New additional columns in table BB_TRANSACTION
+
+add new column MessageID (VARCHAR35)
+add new column FileRef (VARCHAR18)
+add new column SumMessageID(VARCHAR35)
+add new column IntrBkSttlmDt(VARCHAR35)
+
+-----------------------------------
+
+New Table  TXM.BB_DECISION 
+
+(System responses and manual responses will be written in this table with the results like in the current system hold, go, stop  for both TXM/TCM and RiskShield)
+
+have columns (
+TRANSACTIONID VARCHAR(100)
+STATUS VARCHAR (10)
+DAT_ERST DATE
+Primary key for this table (TransactionId + Asset + Status)
+
+Store new entry decisions on HOLD/GO/STOP in TXM/RiskShield and TCM in BB_DECISION 
+column ASSET varchar(3) : values should be "TXM", "RS", "TCM" to distinguish between TXM/RS/TCM decisions. First we will only have TXM and TCM. Later when RS takes over we will see only RS and TCM.
+column RSSCORE integer score from "RS" should be stored
+column RSCOMMENT varchar(1000) comment from "RS" should be stored
+column RSEVENTID varchar(100) eventId from "RS" should be stored
+column RSREQUESTID varchar(100) eventId from "RS" should be stored
+
+--------------------------
+Create new tables FOR RETAIL
+
+New table name TXM.RETAIL_TRANSACTION copy from BB_TRANSACTION
+New table name TXM.RETAIL_DECISION copy from BB_DECISION
