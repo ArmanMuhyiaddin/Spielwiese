@@ -279,3 +279,15 @@ git remote add origin https://dev.azure.com/yourorganization/yourproject/_git/yo
 git push -u origin master
 
 Nach diesen Schritten wird Ihr SQL-Skript im Git-Repository auf Azure DevOps gespeichert sein. Von dort aus kann es von anderen Teammitgliedern überprüft, getestet und verwendet werden.
+
+
+
+ALTER TABLE TXM.FRAUD_VERDACHTSFAELLE ADD (
+  CONSTRAINT AWV_BEACHTEN_CHK
+  CHECK (AWV_BEACHTEN is null or (AWV_BEACHTEN in ('J','N') and AWV_BEACHTEN = upper(AWV_BEACHTEN)))
+  ENABLE VALIDATE
+,  CONSTRAINT FRAUD_VERDACHTSFAELLE_PK
+  PRIMARY KEY
+  (ID)
+  USING INDEX TXM.FRAUD_VERDACHTSFAELLE_PK
+  ENABLE VALIDATE);
